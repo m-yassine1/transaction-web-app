@@ -1,0 +1,98 @@
+﻿@page "/account/{id}/edit"
+@using Transactions.Shared
+@using Transactions.Shared.Model
+@inject HttpClient Http
+
+<h3>Edit</h3>
+@if (account == null)
+{
+
+    <div class="container w-25">
+        <h3>Create</h3>
+        <form class="row g-3 needs-validation" method="post" action="/account-api/v1/accounts">
+            <div class="col-12">
+                <label class="form-label" for="accountNumber">Account Number</label>
+                <input class="form-control" type="text" name="accountNumber" placeholder="Account Number" required />
+                <div class="invalid-feedback">
+                    Please provide an Account Number.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="form-label" for="iban">Iban</label>
+                <input class="form-control" type="text" name="iban" placeholder="Iban" required />
+                <div class="invalid-feedback">
+                    Please provide an Iban.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="form-label" for="bankName">Bank Name</label>
+                <input class="form-control" type="text" name="bankName" placeholder="Bank Name" required />
+                <div class="invalid-feedback">
+                    Please provide a Bank Name.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="form-label" for="currency">Currency</label>
+                <input class="form-control" type="text" name="currency" placeholder="Currency" required />
+                <div class="invalid-feedback">
+                    Please provide a Currency.
+                </div>
+            </div>
+            <div class="col-12 mt-2 text-center">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+}
+
+else
+{
+
+    <div class="container w-25">
+        <h3>Create</h3>
+        <form class="row g-3 needs-validation" method="patch" action="/account-api/v1/accounts">
+            <div class="col-12">
+                <label class="form-label" for="accountNumber">Account Number</label>
+                <input class="form-control" type="text" name="accountNumber" placeholder="Account Number" value="@account.AccountNumber" required />
+                <div class="invalid-feedback">
+                    Please provide an Account Number.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="form-label" for="iban">Iban</label>
+                <input class="form-control" type="text" name="iban" placeholder="Iban" value="@account.Iban" required />
+                <div class="invalid-feedback">
+                    Please provide an Iban.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="form-label" for="bankName">Bank Name</label>
+                <input class="form-control" type="text" name="bankName" placeholder="Bank Name" value="@account.BankName" required />
+                <div class="invalid-feedback">
+                    Please provide a Bank Name.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="form-label" for="currency">Currency</label>
+                <input class="form-control" type="text" name="currency" placeholder="Currency" value="@account.Currency" required />
+                <div class="invalid-feedback">
+                    Please provide a Currency.
+                </div>
+            </div>
+            <div class="col-12 mt-2 text-center">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+}
+
+
+@code {
+    private AccountResponse account;
+    private long id = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        account = await Http.GetFromJsonAsync<AccountResponse>($"account-api/v1/accounts/{id}");
+    }
+}
