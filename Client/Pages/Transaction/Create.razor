@@ -1,0 +1,18 @@
+﻿@page "/transaction/create"
+@using Transactions.Shared
+@using Transactions.Shared.Model
+@inject HttpClient Http
+
+
+<h3>Create</h3>
+<input type="text" name="amount" />
+<input type="date" name="date" />
+
+@code {
+    private TransactionResponse transaction;
+
+    protected override async Task OnInitializedAsync()
+    {
+        transaction = await Http.GetFromJsonAsync<TransactionResponse>($"transaction-api/v1/transactions");
+    }
+}

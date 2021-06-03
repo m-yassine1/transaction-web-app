@@ -1,0 +1,16 @@
+﻿@page "/transaction/{id}/edit"
+@using Transactions.Shared
+@using Transactions.Shared.Model
+@inject HttpClient Http
+
+<h3>Edit</h3>
+
+@code {
+    private AccountResponse account;
+    private long id =1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        account = await Http.GetFromJsonAsync<AccountResponse>($"account-api/v1/accounts/{id}");
+    }
+}
